@@ -1,0 +1,28 @@
+{
+  "name": "node_stmt",
+  "version": "1.0.0",
+  "description": "task",
+  "keywords": [
+    "task",
+    "viewer",
+    "progress"
+  ],
+  "bin": {
+    "stmt": "./bin/stmt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hiroyukim/node-stmt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hiroyukim/node-stmt/issues"
+  },
+  "dependencies": {
+    "sprintf": "0.1.5",
+    "commander": "2.9.0",
+    "log4js": "0.6.38",
+    "js-yaml": "3.6.1"
+  },
+  "author": "hiroyukim",
+  "license": "MIT"
+}

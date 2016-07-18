@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+'use strict';
+
+var yaml    = require('js-yaml'),
+    fs      = require('fs'),
+    sprintf = require('sprintf').sprintf,
+    program = require('commander'),
+    log4js  = require('log4js'),
+    logger  = log4js.getLogger();
+
+program
+    .usage('<filepath>')
+    .parse(process.argv);
+
+var filepath = program.args[0];
+
+if(!filepath) {
+    program.help();
+}
+
+try {
+    var data = yaml.safeLoad(fs.readFileSync(filepath, 'utf8'));
+} catch(e) {
+    logger.error(e);
+    program.help();
+}
+// Buffer.byteLength(
+
+function create_progress_bar(progress) {
+    var array = []
+    for( var i=0; i < 100; i++ ) {
+        array.push(
+            ( i < progress ) ? '#' : '_'
+        );
+    }
+    return '[' + array.join('') + ']';
+}
+
+for( var i in data ) {
+    console.log(
+        sprintf("%03d%%",data[i].progress),
+        create_progress_bar(data[i].progress),
+        data[i].name
+    );
+}
