@@ -24,7 +24,6 @@ try {
     logger.error(e);
     program.help();
 }
-// Buffer.byteLength(
 
 function create_progress_bar(progress) {
     progress = progress / 10;
