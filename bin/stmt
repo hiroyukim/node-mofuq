@@ -36,10 +36,15 @@ function create_progress_bar(progress) {
     return '[' + array.join('') + ']';
 }
 
+var sum_hour = 0;
 for( var i in data ) {
     console.log(
-        sprintf("%03d%%",data[i].progress),
         create_progress_bar(data[i].progress),
+        sprintf("(%03d%%)",data[i].progress),
+        sprintf("[%02dh]",data[i]['hour'] || 0),
         data[i].name
     );
+    sum_hour += data[i]['hour'] || 0;
 }
+
+console.log("total(hour): " + sum_hour );
