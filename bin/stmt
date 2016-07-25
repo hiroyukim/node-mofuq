@@ -25,6 +25,11 @@ try {
     program.help();
 }
 
+if(data.length == 0 ) {
+    logger.error("No data.");
+    process.exit();
+}
+
 function create_progress_bar(progress) {
     progress = progress / 10;
     var array = [];
@@ -37,6 +42,7 @@ function create_progress_bar(progress) {
 }
 
 var sum_hour = 0;
+var sum_progress = 0;
 for( var i in data ) {
     console.log(
         create_progress_bar(data[i].progress),
@@ -45,6 +51,9 @@ for( var i in data ) {
         data[i].name
     );
     sum_hour += data[i]['hour'] || 0;
+    sum_progress += data[i].progress;
 }
 
-console.log("total(hour): " + sum_hour );
+console.log("tasks: " + data.length );
+console.log("hour: " + sum_hour );
+console.log(sprintf("progress: %d%%", parseInt( ( sum_progress / ( data.length * 100 ) ) * 100 ) ) );
