@@ -10,9 +10,11 @@ var yaml    = require('js-yaml'),
 
 program
     .usage('<filepath>')
+    .option('-p, --params [params]', 'Set paramname',String)
     .parse(process.argv);
 
 var filepath = program.args[0];
+var params   = program.params;
 
 if(!filepath) {
     program.help();
@@ -44,12 +46,21 @@ function create_progress_bar(progress) {
 var sum_hour = 0;
 var sum_progress = 0;
 for( var i in data ) {
-    console.log(
+    var outputs = [
         create_progress_bar(data[i].progress),
         sprintf("(%03d%%)",data[i].progress),
         sprintf("[%02dh]",data[i]['hour'] || 0),
         data[i].name
-    );
+    ];
+
+    if( params ) {
+        var append_params = params.split(',');
+        for( var key in append_params ) {
+            outputs.push( '[' + ( data[i][append_params[key]] || 'undefined') + ']')
+        }
+    }
+
+    console.log(outputs.join("\t"));
     sum_hour += data[i]['hour'] || 0;
     sum_progress += data[i].progress;
 }
