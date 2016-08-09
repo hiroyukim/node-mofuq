@@ -20,18 +20,6 @@ if(!filepath) {
     program.help();
 }
 
-try {
-    var data = yaml.safeLoad(fs.readFileSync(filepath, 'utf8'));
-} catch(e) {
-    logger.error(e);
-    program.help();
-}
-
-if(data.length == 0 ) {
-    logger.error("No data.");
-    process.exit();
-}
-
 function create_progress_bar(progress) {
     progress = progress / 10;
     var array = [];
@@ -43,28 +31,62 @@ function create_progress_bar(progress) {
     return '[' + array.join('') + ']';
 }
 
-var sum_hour = 0;
-var sum_progress = 0;
-for( var i in data ) {
-    var outputs = [
-        create_progress_bar(data[i].progress),
-        sprintf("(%03d%%)",data[i].progress),
-        sprintf("[%02dh]",data[i]['hour'] || 0),
-        data[i].name
-    ];
+function show_data(filepath,depth) {
+    try {
+        var data = yaml.safeLoad(fs.readFileSync(filepath, 'utf8'));
+    } catch(e) {
+        logger.error(e);
+        return;
+    }
 
-    if( params ) {
-        var append_params = params.split(',');
-        for( var key in append_params ) {
-            outputs.push( '[' + ( data[i][append_params[key]] || 'undefined') + ']')
+    if(data.length == 0 ) {
+        logger.error("No data.");
+        return;
+    }
+
+    var space = function(depth) {
+        var space = '';
+        for(var i =0; i < depth; i++ ) {
+            space += "            ";
+        }
+        return space;
+    }(depth);
+
+    var sum_hour = 0;
+    var sum_progress = 0;
+    for( var i in data ) {
+        var outputs = [
+            create_progress_bar(data[i].progress),
+            sprintf("(%03d%%)",data[i].progress),
+            sprintf("[%02dh]",data[i]['hour'] || 0),
+            data[i].name
+        ];
+
+        if( params ) {
+            var append_params = params.split(',');
+            for( var key in append_params ) {
+                outputs.push( '[' + ( data[i][append_params[key]] || 'undefined') + ']')
+            }
+        }
+
+        console.log( space + outputs.join("\t"));
+        sum_hour += data[i]['hour'] || 0;
+        sum_progress += data[i].progress;
+
+        if( data[i]['include'] ) {
+            show_data(data[i]['include'],depth + 1);
         }
     }
 
-    console.log(outputs.join("\t"));
-    sum_hour += data[i]['hour'] || 0;
-    sum_progress += data[i].progress;
+    var sum_outputs = [
+        "tasks: " + data.length,
+        "hour: " + sum_hour,
+        sprintf("progress: %d%%", parseInt( ( sum_progress / ( data.length * 100 ) ) * 100 ))
+    ];
+
+    for( var sum_outputs_index in sum_outputs ) {
+        console.log( space + sum_outputs[sum_outputs_index] );
+    }
 }
 
-console.log("tasks: " + data.length );
-console.log("hour: " + sum_hour );
-console.log(sprintf("progress: %d%%", parseInt( ( sum_progress / ( data.length * 100 ) ) * 100 ) ) );
+show_data(filepath,0);

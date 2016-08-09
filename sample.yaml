@@ -4,6 +4,7 @@
 - 
   name: 'taks2'
   progress: 70
+  include: sample2.yaml
 - 
   name: 'taks3'
   progress: 35
