@@ -1,4 +1,10 @@
-# node-stmt
+node-mofuq
+==============
+
+node-mofuq is a simple task management tool by yaml.
+
+Note
+----
 
 ```
 node bin/node-stmt sample.yaml
@@ -18,3 +24,14 @@ tasks: 4
 hour: 0
 progress: 55%
 ```
+
+## Installation
+
+Run the following command
+
+    $ npm install node-mofuq
+
+Then to make sure the dependencies are installed:
+
+    $ npm install
+
