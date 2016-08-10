@@ -7,7 +7,7 @@ Note
 ----
 
 ```
-node bin/node-stmt sample.yaml
+node bin/node-mofuq sample.yaml
 ```
 
 ```
