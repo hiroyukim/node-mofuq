@@ -1,21 +1,21 @@
 {
-  "name": "node_stmt",
+  "name": "node_mofuq",
   "version": "1.0.0",
-  "description": "task",
+  "description": "node-mofuq is a simple task management tool by yaml.",
   "keywords": [
     "task",
     "viewer",
     "progress"
   ],
   "bin": {
-    "stmt": "./bin/stmt"
+    "node-mofuq": "./bin/node-mofuq"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hiroyukim/node-stmt.git"
+    "url": "git://github.com/hiroyukim/node-mofuq.git"
   },
   "bugs": {
-    "url": "https://github.com/hiroyukim/node-stmt/issues"
+    "url": "https://github.com/hiroyukim/node-mofuq/issues"
   },
   "dependencies": {
     "sprintf": "0.1.5",
