@@ -1,4 +1,4 @@
-node-mofuq
+node_mofuq
 ==============
 
 node-mofuq is a simple task management tool by yaml.
@@ -29,7 +29,7 @@ progress: 55%
 
 Run the following command
 
-    $ npm install node-mofuq
+    $ npm install node_mofuq
 
 Then to make sure the dependencies are installed:
 
