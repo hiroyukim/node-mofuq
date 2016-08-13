@@ -6,6 +6,36 @@ node-mofuq is a simple task management tool by yaml.
 Note
 ----
 
++ sample.yaml
+
+```
+- 
+  name: 'task'
+  progress: 15
+- 
+  name: 'taks2'
+  progress: 70
+  include: sample2.yaml
+- 
+  name: 'taks3'
+  progress: 35
+- 
+  name: 'taks4'
+  progress: 100
+```
+
++ sample2.yaml
+
+```
+- 
+  name: 'task'
+  progress: 15
+- 
+  name: 'taks3'
+  progress: 35
+```
+
+
 ```
 node bin/node-mofuq sample.yaml
 ```
