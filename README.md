@@ -3,7 +3,7 @@ node_mofuq
 
 node-mofuq is a simple task management tool by yaml.
 
-Note
+example
 ----
 
 + sample.yaml
