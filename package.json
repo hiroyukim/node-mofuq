@@ -1,6 +1,6 @@
 {
   "name": "node_mofuq",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "node-mofuq is a simple task management tool by yaml.",
   "keywords": [
     "task",
