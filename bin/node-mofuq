@@ -31,7 +31,7 @@ function create_progress_bar(progress) {
     return '[' + array.join('') + ']';
 }
 
-function show_data(filepath,depth) {
+function get_data(filepath,depth,outputs_list) {
     try {
         var data = yaml.safeLoad(fs.readFileSync(filepath, 'utf8'));
     } catch(e) {
@@ -55,9 +55,18 @@ function show_data(filepath,depth) {
     var sum_hour = 0;
     var sum_progress = 0;
     for( var i in data ) {
+
+        var progress;
+        var tmp_output_list = []
+        if( data[i]['include'] ) {
+            progress = get_data(data[i]['include'],depth + 1,tmp_output_list);
+        } else {
+            progress = data[i].progress;
+        }
+
         var outputs = [
-            create_progress_bar(data[i].progress),
-            sprintf("(%03d%%)",data[i].progress),
+            create_progress_bar(progress),
+            sprintf("(%03d%%)",progress),
             sprintf("[%02dh]",data[i]['hour'] || 0),
             data[i].name
         ];
@@ -69,24 +78,33 @@ function show_data(filepath,depth) {
             }
         }
 
-        console.log( space + outputs.join("\t"));
-        sum_hour += data[i]['hour'] || 0;
-        sum_progress += data[i].progress;
-
-        if( data[i]['include'] ) {
-            show_data(data[i]['include'],depth + 1);
+        outputs_list.push(space + outputs.join("\t"));
+        if( tmp_output_list.length > 0 ) {
+            Array.prototype.push.apply(outputs_list,tmp_output_list);
         }
+        sum_hour += data[i]['hour'] || 0;
+        sum_progress += progress;
+
     }
+
+    var results_progress = parseInt( ( sum_progress / ( data.length * 100 ) ) * 100 );
 
     var sum_outputs = [
         "tasks: " + data.length,
         "hour: " + sum_hour,
-        sprintf("progress: %d%%", parseInt( ( sum_progress / ( data.length * 100 ) ) * 100 ))
+        sprintf("progress: %d%%", results_progress)
     ];
 
     for( var sum_outputs_index in sum_outputs ) {
-        console.log( space + sum_outputs[sum_outputs_index] );
+        outputs_list.push( space + sum_outputs[sum_outputs_index] );
     }
+
+    return results_progress;
 }
 
-show_data(filepath,0);
+var outputs_list = [];
+get_data(filepath,0,outputs_list);
+
+for( var oli in outputs_list ) {
+    console.log( outputs_list[oli] );
+}
