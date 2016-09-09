@@ -1,6 +1,7 @@
 - 
-  name: 'task'
+  name: 'task5'
   progress: 15
+  include: sample3.yaml
 - 
-  name: 'taks3'
-  progress: 35
+  name: 'taks6'
+  progress: 15
