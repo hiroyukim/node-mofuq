@@ -20,8 +20,8 @@
   "dependencies": {
     "sprintf": "0.1.5",
     "commander": "2.9.0",
-    "log4js": "0.6.38",
-    "js-yaml": "3.6.1"
+    "log4js": "~6.4.0",
+    "js-yaml": "~3.15.2"
   },
   "author": "hiroyukim",
   "license": "MIT"
